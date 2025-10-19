@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yogavinay Kolluri - Developer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <link rel="stylesheet" href="./styles/projects.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #e2e8f0;
+        }
+        .glassmorphism {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .skill-card:hover .skill-icon {
+            transform: scale(1.1);
+        }
+        .project-card {
+            height: 400px;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0) 70%);
+            opacity: 0.9;
+            transition: opacity 0.3s ease-in-out;
+            z-index: 1;
+        }
+        .project-card:hover::before {
+            opacity: 1;
+        }
+        .project-card:hover .project-content {
+             transform: translateY(-10px);
+        }
+        .project-card img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            z-index: 0;
+        }
+        .project-card:hover img {
+            transform: scale(1.05);
+        }
+        .project-content {
+            z-index: 2;
+            position: relative;
+        }
+        nav.scrolled {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        /* Video Modal Styles */
+        #videoModal {
+            transition: opacity 0.3s ease;
+        }
+        #videoModal iframe {
+            aspect-ratio: 16 / 9;
+        }
+        
+        /* Project Modal Styles */
+        #projectDetailModal {
+            transition: opacity 0.3s ease;
+        }
+        #projectDetailModal .modal-background {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        #projectDetailModal .modal-content {
+            background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 100%);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navigation -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="flex items-center">
+                <img src="./images/profile-nav.jpg" 
+                     onerror="this.onerror=null;this.src='https://placehold.co/40x40/0a0a0a/e2e8f0?text=YK';" 
+                     alt="Yogavinay Kolluri" 
+                     class="w-10 h-10 rounded-full border-2 border-sky-500 object-cover shadow-lg">
+            </a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#about" class="text-slate-300 hover:text-sky-400 transition-colors">About</a>
+                <a href="#skills" class="text-slate-300 hover:text-sky-400 transition-colors">Skills</a>
+                <a href="#projects" class="text-slate-300 hover:text-sky-400 transition-colors">Projects</a>
+                <a href="#contact" class="text-slate-300 hover:text-sky-400 transition-colors">Contact</a>
+            </div>
+            <a href="#contact" class="hidden md:block bg-sky-500 hover:bg-sky-600 text-white font-medium py-2 px-4 rounded-lg transition-colors">
+                Hire Me
+            </a>
+            <button id="mobile-menu-btn" class="md:hidden text-slate-300">
+                <i data-lucide="menu"></i>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900/90 backdrop-blur-sm">
+            <a href="#about" class="block py-3 px-6 text-center text-slate-300 hover:bg-slate-800">About</a>
+            <a href="#skills" class="block py-3 px-6 text-center text-slate-300 hover:bg-slate-800">Skills</a>
+            <a href="#projects" class="block py-3 px-6 text-center text-slate-300 hover:bg-slate-800">Projects</a>
+            <a href="#contact" class="block py-3 px-6 text-center text-slate-300 hover:bg-slate-800">Contact</a>
+             <a href="#contact" class="block py-4 px-6 text-center bg-sky-500 text-white font-medium">Hire Me</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6">
+        <!-- Hero Section -->
+        <section id="hero" class="min-h-screen flex items-center pt-20">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="order-2 md:order-1">
+                    <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-4">
+                        Hi, I'm <span class="gradient-text">Yogavinay Kolluri</span>
+                    </h1>
+                    <h2 class="text-2xl md:text-3xl font-semibold text-slate-300 mb-6">AI/ML Enthusiast & App Developer</h2>
+                    <p class="text-lg text-slate-400 mb-8 max-w-lg">
+                        A passionate Computer Science student specializing in AI/ML and App Development. I build innovative solutions to real-world problems with clean and efficient code.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#projects" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-6 rounded-lg transition-transform transform hover:scale-105 shadow-lg shadow-sky-500/20">
+                            View My Work
+                        </a>
+                        <a href="#" id="downloadCvBtn" class="bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 px-6 rounded-lg transition-transform transform hover:scale-105 shadow-lg shadow-slate-700/20 flex items-center gap-2">
+                           <i data-lucide="download" class="w-5 h-5"></i> <span>Download CV</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2 flex justify-center items-center">
+                    <div class="relative w-72 h-72 md:w-96 md:h-96">
+                        <div class="absolute inset-0 bg-gradient-to-br from-sky-500 to-indigo-600 rounded-full blur-2xl opacity-50"></div>
+                        <img src="./images/profile-nav.jpg" 
+                             onerror="this.onerror=null;this.src='https://placehold.co/400x400/0a0a0a/e2e8f0?text=YK';" 
+                             alt="Yogavinay Kolluri" 
+                             class="relative w-full h-full object-cover rounded-full border-4 border-slate-800 shadow-2xl">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Me Section -->
+        <section id="about" class="py-24">
+             <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold">About <span class="gradient-text">Me</span></h2>
+                <p class="text-slate-400 mt-2">My journey and passion for development.</p>
+            </div>
+            <div class="grid md:grid-cols-5 gap-10 items-center">
+                <div class="md:col-span-2">
+                    <img src="https://i.imgur.com/eN8t2a5.jpeg" 
+                         onerror="this.onerror=null;this.src='https://placehold.co/600x700/1e293b/e2e8f0?text=Developer';"
+                         alt="Developer at work" class="rounded-lg shadow-2xl w-full h-auto object-cover">
+                </div>
+                <div class="md:col-span-3">
+                    <h3 class="text-3xl font-semibold text-slate-100 mb-4">Crafting Digital Experiences</h3>
+                    <p class="text-slate-400 mb-4 leading-relaxed">
+                        Hello! I'm Yogavinay, a third-year Computer Science student with a strong foundation in AI/ML, App Development with Flutter, and Cloud Technologies like AWS. My journey into code is driven by a passion for using technology to create innovative and practical solutions.
+                    </p>
+                     <p class="text-slate-400 mb-6 leading-relaxed">
+                        I specialize in Python, Flutter, and TensorFlow, and I'm always eager to learn and take on new challenges. I believe in writing clean, maintainable code to build dynamic and user-friendly applications.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="https://github.com/your-username" target="_blank" class="text-slate-400 hover:text-sky-400"><i data-lucide="github" class="w-8 h-8"></i></a>
+                        <a href="https://www.linkedin.com/in/yogavinay-kolluri-b9a9402a0/" target="_blank" class="text-slate-400 hover:text-sky-400"><i data-lucide="linkedin" class="w-8 h-8"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-24">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold">My <span class="gradient-text">Skills</span></h2>
+                <p class="text-slate-400 mt-2">Technologies I love to work with.</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div class="skill-card glassmorphism p-6 rounded-lg text-center transition-all duration-300 hover:border-sky-500 hover:-translate-y-2">
+                    <div class="skill-icon text-sky-400 w-16 h-16 mx-auto mb-4 transition-transform duration-300">
+                        <i data-lucide="smartphone" class="w-full h-full"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-100">Flutter</h3>
+                </div>
+                 <div class="skill-card glassmorphism p-6 rounded-lg text-center transition-all duration-300 hover:border-sky-500 hover:-translate-y-2">
+                    <div class="skill-icon text-yellow-400 w-16 h-16 mx-auto mb-4 transition-transform duration-300">
+                        <i data-lucide="code-2" class="w-full h-full"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-100">Python</h3>
+                </div>
+                <div class="skill-card glassmorphism p-6 rounded-lg text-center transition-all duration-300 hover:border-sky-500 hover:-translate-y-2">
+                    <div class="skill-icon text-orange-400 w-16 h-16 mx-auto mb-4 transition-transform duration-300">
+                        <i data-lucide="brain-circuit" class="w-full h-full"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-100">TensorFlow</h3>
+                </div>
+                <div class="skill-card glassmorphism p-6 rounded-lg text-center transition-all duration-300 hover:border-sky-500 hover:-translate-y-2">
+                    <div class="skill-icon text-blue-400 w-16 h-16 mx-auto mb-4 transition-transform duration-300">
+                        <i data-lucide="cloud" class="w-full h-full"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-100">AWS</h3>
+                </div>
+                <div class="skill-card glassmorphism p-6 rounded-lg text-center transition-all duration-300 hover:border-sky-500 hover:-translate-y-2">
+                    <div class="skill-icon text-yellow-500 w-16 h-16 mx-auto mb-4 transition-transform duration-300">
+                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="w-full h-full fill-current"><path d="M232.12,45.23,138.87,2.23a13.88,13.88,0,0,0-13.74,0L25.88,45.23A14,14,0,0,0,16,57.77V198.23a14,14,0,0,0,9.88,13.54l93.25,43a13.88,13.88,0,0,0,13.74,0l93.25-43a14,14,0,0,0,9.88-13.54V57.77a14,14,0,0,0-9.88-12.54Zm-12.24,153L126.63,241.1a1.87,1.87,0,0,1-1.26,0L32.12,198.23V57.77L125.37,14.77a1.87,1.87,0,0,1,1.26,0L219.88,57.77Z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-100">JavaScript</h3>
+                </div>
+                <div class="skill-card glassmorphism p-6 rounded-lg text-center transition-all duration-300 hover:border-sky-500 hover:-translate-y-2">
+                     <div class="skill-icon text-red-400 w-16 h-16 mx-auto mb-4 transition-transform duration-300">
+                        <i data-lucide="database" class="w-full h-full"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-100">Firebase</h3>
+                </div>
+                <div class="skill-card glassmorphism p-6 rounded-lg text-center transition-all duration-300 hover:border-sky-500 hover:-translate-y-2">
+                     <div class="skill-icon text-pink-400 w-16 h-16 mx-auto mb-4 transition-transform duration-300">
+                        <i data-lucide="git-branch" class="w-full h-full"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-100">Git & GitHub</h3>
+                </div>
+                 <div class="skill-card glassmorphism p-6 rounded-lg text-center transition-all duration-300 hover:border-sky-500 hover:-translate-y-2">
+                     <div class="skill-icon text-purple-400 w-16 h-16 mx-auto mb-4 transition-transform duration-300">
+                        <i data-lucide="code" class="w-full h-full"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-100">HTML & CSS</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-24">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold">Featured <span class="gradient-text">Projects</span></h2>
+                <p class="text-slate-400 mt-2">A selection of my best work.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="project-card bg-slate-800 rounded-lg overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer" onclick="openProjectDetailModal('Deepfake Detection', 'A CNN-based model using TensorFlow & ResNet50 to detect deepfakes with over 85% accuracy.', './images/deepfake-detection.png', ['Python', 'TensorFlow', 'CNN'], 'https://github.com/yogavinay/deepfake-faces-detector', 'https://www.linkedin.com/in/yogavinay-kolluri-b9a9402a0/')">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="./images/deepfake-detection.png" 
+                             alt="Deepfake Detection" 
+                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <h3 class="text-xl font-bold text-white mb-2">Deepfake Detection</h3>
+                            <p class="text-slate-200 text-sm">A CNN-based model using TensorFlow & ResNet50 to detect deepfakes with over 85% accuracy.</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex gap-2 mb-4">
+                            <span class="bg-slate-700 text-sky-400 px-3 py-1 rounded-full text-sm">Python</span>
+                            <span class="bg-slate-700 text-sky-400 px-3 py-1 rounded-full text-sm">TensorFlow</span>
+                            <span class="bg-slate-700 text-sky-400 px-3 py-1 rounded-full text-sm">CNN</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="https://github.com/yogavinay/deepfake-faces-detector" target="_blank" class="text-sky-400 hover:text-sky-300 flex items-center gap-2">
+                                <i data-lucide="github" class="w-5 h-5"></i>
+                                <span>Source</span>
+                            </a>
+                            <a href="https://www.linkedin.com/posts/yogavinay-kolluri-b9a9402a0_machinelearning-deeplearning-computervision-activity-7379884433048432640-YsZk" target="_blank" class="text-sky-400 hover:text-sky-300 flex items-center gap-2">
+                                <i data-lucide="linkedin" class="w-5 h-5"></i>
+                                <span>LinkedIn</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card bg-slate-800 rounded-lg overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer" onclick="openProjectDetailModal('Instagram Clone', 'A full-featured social media app using Flutter and Firebase with real-time database and authentication.', './images/instagram-clone.png', ['Flutter', 'Firebase', 'Dart'], 'https://github.com/your-username/instagram-clone', 'https://www.linkedin.com/in/yogavinay-kolluri-b9a9402a0/')">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="./images/instagram-clone.png" 
+                             alt="Instagram Clone" 
+                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <h3 class="text-xl font-bold text-white mb-2">Instagram Clone</h3>
+                            <p class="text-slate-200 text-sm">A full-featured social media app using Flutter and Firebase with real-time database and authentication.</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex gap-2 mb-4">
+                            <span class="bg-slate-700 text-sky-400 px-3 py-1 rounded-full text-sm">Flutter</span>
+                            <span class="bg-slate-700 text-sky-400 px-3 py-1 rounded-full text-sm">Firebase</span>
+                            <span class="bg-slate-700 text-sky-400 px-3 py-1 rounded-full text-sm">Dart</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="https://github.com/your-username/instagram-clone" target="_blank" class="text-sky-400 hover:text-sky-300 flex items-center gap-2">
+                                <i data-lucide="github" class="w-5 h-5"></i>
+                                <span>Source</span>
+                            </a>
+                            <a href="https://www.linkedin.com/in/yogavinay-kolluri-b9a9402a0/" target="_blank" class="text-sky-400 hover:text-sky-300 flex items-center gap-2">
+                                <i data-lucide="linkedin" class="w-5 h-5"></i>
+                                <span>LinkedIn</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card bg-slate-800 rounded-lg overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer" onclick="openProjectDetailModal('Gesture Control System', 'A real-time system using Python, OpenCV & MediaPipe for gesture-based computer interaction.', './images/gesture-control.png', ['Python', 'OpenCV', 'MediaPipe'], 'https://github.com/yogavinay/gesture-control-system', 'https://www.linkedin.com/in/yogavinay-kolluri-b9a9402a0/')">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="./images/gesture-control.png" 
+                             alt="Gesture Control System" 
+                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <h3 class="text-xl font-bold text-white mb-2">Gesture Control System</h3>
+                            <p class="text-slate-200 text-sm">A real-time system using Python, OpenCV & MediaPipe for gesture-based computer interaction.</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex gap-2 mb-4">
+                            <span class="bg-slate-700 text-sky-400 px-3 py-1 rounded-full text-sm">Python</span>
+                            <span class="bg-slate-700 text-sky-400 px-3 py-1 rounded-full text-sm">OpenCV</span>
+                            <span class="bg-slate-700 text-sky-400 px-3 py-1 rounded-full text-sm">MediaPipe</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="https://github.com/yogavinay/gesture-control-system" target="_blank" class="text-sky-400 hover:text-sky-300 flex items-center gap-2">
+                                <i data-lucide="github" class="w-5 h-5"></i>
+                                <span>Source</span>
+                            </a>
+                            <a href="https://www.linkedin.com/in/yogavinay-kolluri-b9a9402a0/" target="_blank" class="text-sky-400 hover:text-sky-300 flex items-center gap-2">
+                                <i data-lucide="linkedin" class="w-5 h-5"></i>
+                                <span>LinkedIn</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 - Face Expression Detector -->
+                <div class="project-card bg-slate-800 rounded-lg overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer" onclick="openProjectDetailModal('Face Expression Detector', 'Real-time facial expression detection system using computer vision and deep learning.', './images/face_expression.png', ['Python', 'OpenCV', 'TensorFlow'], 'https://github.com/yogavinay/deepfake-faces-detector', 'https://www.linkedin.com/in/yogavinay-kolluri-b9a9402a0/')">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="./images/face_expression.png" 
+                             alt="Face Expression Detector" 
+                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <h3 class="text-xl font-bold text-white mb-2">Face Expression Detector</h3>
+                            <p class="text-slate-200 text-sm">Real-time facial expression detection system using computer vision and deep learning.</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex gap-2 mb-4">
+                            <span class="bg-slate-700 text-sky-400 px-3 py-1 rounded-full text-sm">Python</span>
+                            <span class="bg-slate-700 text-sky-400 px-3 py-1 rounded-full text-sm">OpenCV</span>
+                            <span class="bg-slate-700 text-sky-400 px-3 py-1 rounded-full text-sm">TensorFlow</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="https://github.com/yogavinay/deepfake-faces-detector" target="_blank" class="text-sky-400 hover:text-sky-300 flex items-center gap-2">
+                                <i data-lucide="github" class="w-5 h-5"></i>
+                                <span>Source</span>
+                            </a>
+                            <a href="https://www.linkedin.com/in/yogavinay-kolluri-b9a9402a0/" target="_blank" class="text-sky-400 hover:text-sky-300 flex items-center gap-2">
+                                <i data-lucide="linkedin" class="w-5 h-5"></i>
+                                <span>LinkedIn</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5 - Online Pickles.com -->
+                <div class="project-card bg-slate-800 rounded-lg overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer" onclick="openProjectDetailModal('Online Pickles.com', 'Cross-platform e-commerce app for Android and web development practice using Flutter.', './images/pickles.png', ['Flutter', 'Dart', 'Cross-platform'], 'https://github.com/yogavinay/pickles.com', 'https://www.linkedin.com/in/yogavinay-kolluri-b9a9402a0/')">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="./images/pickles.png" 
+                             alt="Online Pickles.com" 
+                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <h3 class="text-xl font-bold text-white mb-2">Online Pickles.com</h3>
+                            <p class="text-slate-200 text-sm">Cross-platform e-commerce app for Android and web development practice using Flutter.</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex gap-2 mb-4">
+                            <span class="bg-slate-700 text-sky-400 px-3 py-1 rounded-full text-sm">Flutter</span>
+                            <span class="bg-slate-700 text-sky-400 px-3 py-1 rounded-full text-sm">Dart</span>
+                            <span class="bg-slate-700 text-sky-400 px-3 py-1 rounded-full text-sm">Cross-platform</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="https://github.com/yogavinay/pickles.com" target="_blank" class="text-sky-400 hover:text-sky-300 flex items-center gap-2">
+                                <i data-lucide="github" class="w-5 h-5"></i>
+                                <span>Source</span>
+                            </a>
+                            <a href="https://www.linkedin.com/in/yogavinay-kolluri-b9a9402a0/" target="_blank" class="text-sky-400 hover:text-sky-300 flex items-center gap-2">
+                                <i data-lucide="linkedin" class="w-5 h-5"></i>
+                                <span>LinkedIn</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6 - Amazon Clone Webpage -->
+                <div class="project-card bg-slate-800 rounded-lg overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer" onclick="openProjectDetailModal('Amazon Clone Webpage', 'Frontend clone of Amazon\'s e-commerce interface built with modern web technologies.', './images/amazon.png', ['HTML', 'CSS', 'JavaScript'], 'https://github.com/yogavinay/git-demo', 'https://www.linkedin.com/in/yogavinay-kolluri-b9a9402a0/')">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="./images/amazon.png" 
+                             alt="Amazon Clone Webpage" 
+                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <h3 class="text-xl font-bold text-white mb-2">Amazon Clone Webpage</h3>
+                            <p class="text-slate-200 text-sm">Frontend clone of Amazon's e-commerce interface built with modern web technologies.</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex gap-2 mb-4">
+                            <span class="bg-slate-700 text-sky-400 px-3 py-1 rounded-full text-sm">HTML</span>
+                            <span class="bg-slate-700 text-sky-400 px-3 py-1 rounded-full text-sm">CSS</span>
+                            <span class="bg-slate-700 text-sky-400 px-3 py-1 rounded-full text-sm">JavaScript</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="https://github.com/yogavinay/git-demo" target="_blank" class="text-sky-400 hover:text-sky-300 flex items-center gap-2">
+                                <i data-lucide="github" class="w-5 h-5"></i>
+                                <span>Source</span>
+                            </a>
+                            <a href="https://www.linkedin.com/in/yogavinay-kolluri-b9a9402a0/" target="_blank" class="text-sky-400 hover:text-sky-300 flex items-center gap-2">
+                                <i data-lucide="linkedin" class="w-5 h-5"></i>
+                                <span>LinkedIn</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 7 - Python Practice Projects -->
+                <div class="project-card bg-slate-800 rounded-lg overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer" onclick="openProjectDetailModal('Python Practice Projects', 'Collection of beginner-level Python projects for learning programming fundamentals.', './images/practiced_projects.png', ['Python', 'Beginner', 'Practice'], 'https://github.com/yogavinay/python-practice-projects-beginner-level', 'https://www.linkedin.com/in/yogavinay-kolluri-b9a9402a0/')">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="./images/practiced_projects.png" 
+                             alt="Python Practice Projects" 
+                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <h3 class="text-xl font-bold text-white mb-2">Python Practice Projects</h3>
+                            <p class="text-slate-200 text-sm">Collection of beginner-level Python projects for learning programming fundamentals.</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex gap-2 mb-4">
+                            <span class="bg-slate-700 text-sky-400 px-3 py-1 rounded-full text-sm">Python</span>
+                            <span class="bg-slate-700 text-sky-400 px-3 py-1 rounded-full text-sm">Beginner</span>
+                            <span class="bg-slate-700 text-sky-400 px-3 py-1 rounded-full text-sm">Practice</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="https://github.com/yogavinay/python-practice-projects-beginner-level" target="_blank" class="text-sky-400 hover:text-sky-300 flex items-center gap-2">
+                                <i data-lucide="github" class="w-5 h-5"></i>
+                                <span>Source</span>
+                            </a>
+                            <a href="https://www.linkedin.com/in/yogavinay-kolluri-b9a9402a0/" target="_blank" class="text-sky-400 hover:text-sky-300 flex items-center gap-2">
+                                <i data-lucide="linkedin" class="w-5 h-5"></i>
+                                <span>LinkedIn</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold">Get In <span class="gradient-text">Touch</span></h2>
+                <p class="text-slate-400 mt-2">Let's build something amazing together.</p>
+            </div>
+            <div class="max-w-3xl mx-auto glassmorphism rounded-lg p-8">
+                <form id="contactForm">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <input type="text" id="contactName" placeholder="Your Name" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-sky-500" required>
+                        <input type="email" id="contactEmail" placeholder="Your Email" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-sky-500" required>
+                    </div>
+                    <textarea id="contactMessage" placeholder="Your Message" rows="6" class="w-full mt-6 bg-slate-800 border border-slate-700 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-sky-500" required></textarea>
+                    <div class="text-center mt-6">
+                        <button type="submit" id="submitBtn" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-8 rounded-lg transition-transform transform hover:scale-105 shadow-lg shadow-sky-500/20">
+                            Send Message
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800">
+        <div class="container mx-auto px-6 py-8 text-center text-slate-400">
+             <div class="flex justify-center gap-6 mb-4">
+                <a href="https://github.com/your-username" target="_blank" class="hover:text-sky-400"><i data-lucide="github" class="w-6 h-6"></i></a>
+                <a href="https://www.linkedin.com/in/yogavinay-kolluri-b9a9402a0/" target="_blank" class="hover:text-sky-400"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
+             </div>
+            <p>&copy; 2024 Yogavinay Kolluri. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTopBtn" class="hidden fixed bottom-8 right-8 bg-sky-500 text-white w-12 h-12 rounded-full shadow-lg hover:bg-sky-600 transition-all duration-300 justify-center items-center">
+        <i data-lucide="arrow-up" class="w-6 h-6"></i>
+    </button>
+    
+
+    <!-- Project Detail Modal -->
+    <div id="projectDetailModal" class="hidden fixed inset-0 z-50 flex items-center justify-center">
+        <div class="modal-background absolute inset-0 w-full h-full"></div>
+        <div class="modal-content relative w-full h-full flex items-center justify-center p-8">
+            <button onclick="closeProjectDetailModal()" class="absolute top-8 right-8 w-12 h-12 bg-sky-500 hover:bg-sky-600 text-white rounded-full flex items-center justify-center z-10 transition-colors">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            
+            <div class="max-w-4xl w-full text-center">
+                <div class="mb-8">
+                    <h2 id="modalProjectTitle" class="text-5xl md:text-6xl font-bold text-white mb-4"></h2>
+                    <p id="modalProjectDescription" class="text-xl text-slate-300 mb-6 max-w-3xl mx-auto"></p>
+                    
+                    <div id="modalProjectTechnologies" class="flex flex-wrap justify-center gap-3 mb-8">
+                        <!-- Technologies will be populated here -->
+                    </div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a id="modalProjectGithub" href="#" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-white px-8 py-4 rounded-lg flex items-center justify-center gap-3 text-lg font-medium transition-colors">
+                        <i data-lucide="github" class="w-6 h-6"></i>
+                        <span>View Source Code</span>
+                    </a>
+                    <a id="modalProjectLinkedin" href="#" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg flex items-center justify-center gap-3 text-lg font-medium transition-colors">
+                        <i data-lucide="linkedin" class="w-6 h-6"></i>
+                        <span>LinkedIn Post</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Details Modal -->
+    <div id="projectModal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-slate-900 w-full max-w-6xl rounded-lg shadow-2xl relative my-8" onclick="event.stopPropagation()">
+            <button onclick="closeProjectModal()" class="absolute -top-4 -right-4 w-10 h-10 bg-sky-500 text-white rounded-full flex items-center justify-center z-10">&times;</button>
+            
+            <div class="p-8">
+                <!-- Project Header -->
+                <div class="flex flex-col md:flex-row gap-8 mb-8">
+                    <div class="md:w-1/2">
+                        <img id="projectModalImage" src="" alt="" class="w-full h-64 object-cover rounded-lg shadow-xl">
+                    </div>
+                    <div class="md:w-1/2">
+                        <h2 id="projectModalTitle" class="text-3xl font-bold text-white mb-4"></h2>
+                        <p id="projectModalDescription" class="text-slate-300 mb-6 leading-relaxed"></p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span id="projectModalTechnologies" class="text-slate-400 text-sm"></span>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-4">
+                            <a id="projectModalGithub" href="#" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors">
+                                <i data-lucide="github" class="w-5 h-5"></i>
+                                Source Code
+                            </a>
+                            <a id="projectModalLinkedin" href="#" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors">
+                                <i data-lucide="linkedin" class="w-5 h-5"></i>
+                                LinkedIn Post
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project Content -->
+                <div class="grid md:grid-cols-1 gap-8">
+                    <!-- README Section -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                            <i data-lucide="file-text" class="w-6 h-6 text-sky-400"></i>
+                            Project Documentation
+                        </h3>
+                        <div id="projectModalReadme" class="bg-slate-800 rounded-lg p-4 max-h-96 overflow-y-auto">
+                            <div class="flex items-center justify-center h-32">
+                                <div class="text-center">
+                                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-sky-500 mx-auto mb-2"></div>
+                                    <p class="text-slate-400">Loading README...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="module">
+        import { getResumeUrl, submitContactForm } from './supabase.js';
+        
+        lucide.createIcons();
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                 mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Sticky header on scroll
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.querySelector('nav').classList.add('scrolled');
+            } else {
+                header.querySelector('nav').classList.remove('scrolled');
+            }
+        });
+        
+        // Scroll to top button
+        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+        window.addEventListener('scroll', () => {
+             if (window.scrollY > 300) {
+                scrollToTopBtn.classList.remove('hidden');
+                scrollToTopBtn.classList.add('flex');
+            } else {
+                scrollToTopBtn.classList.remove('flex');
+                scrollToTopBtn.classList.add('hidden');
+            }
+        });
+        
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // --- Dynamic Content Loading ---
+
+        // Load Resume
+        const downloadCvBtn = document.getElementById('downloadCvBtn');
+        downloadCvBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const cvText = downloadCvBtn.querySelector('span');
+            cvText.textContent = "Loading...";
+            const url = await getResumeUrl();
+            if (url) {
+                window.open(url, '_blank');
+                cvText.textContent = "Download CV";
+            } else {
+                alert("Sorry, the resume is not available at the moment.");
+                cvText.textContent = "Download CV";
+            }
+        });
+
+        // Initialize Lucide icons for the static project cards
+        lucide.createIcons();
+
+
+
+        // Project Detail Modal Functions
+        window.openProjectDetailModal = function(title, description, imageUrl, technologies, githubUrl, linkedinUrl) {
+            const modal = document.getElementById('projectDetailModal');
+            const modalBackground = modal.querySelector('.modal-background');
+            const modalTitle = document.getElementById('modalProjectTitle');
+            const modalDescription = document.getElementById('modalProjectDescription');
+            const modalTechnologies = document.getElementById('modalProjectTechnologies');
+            const modalGithub = document.getElementById('modalProjectGithub');
+            const modalLinkedin = document.getElementById('modalProjectLinkedin');
+
+            // Set background image
+            modalBackground.style.backgroundImage = `url(${imageUrl})`;
+            
+            // Populate content
+            modalTitle.textContent = title;
+            modalDescription.textContent = description;
+            modalGithub.href = githubUrl;
+            modalLinkedin.href = linkedinUrl;
+
+            // Display technologies
+            modalTechnologies.innerHTML = technologies.map(tech => 
+                `<span class="bg-slate-700 text-sky-400 px-4 py-2 rounded-full text-sm font-medium">${tech}</span>`
+            ).join('');
+
+            // Show modal
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            
+            // Re-initialize Lucide icons
+            lucide.createIcons();
+        }
+
+        window.closeProjectDetailModal = function() {
+            const modal = document.getElementById('projectDetailModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('projectDetailModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeProjectDetailModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeProjectDetailModal();
+            }
+        });
+
+        // Project Modal Functions
+        window.openProjectModal = async function(project) {
+            const projectModal = document.getElementById('projectModal');
+            const projectModalImage = document.getElementById('projectModalImage');
+            const projectModalTitle = document.getElementById('projectModalTitle');
+            const projectModalDescription = document.getElementById('projectModalDescription');
+            const projectModalTechnologies = document.getElementById('projectModalTechnologies');
+            const projectModalGithub = document.getElementById('projectModalGithub');
+            const projectModalLinkedin = document.getElementById('projectModalLinkedin');
+            const projectModalReadme = document.getElementById('projectModalReadme');
+
+            // Populate project data
+            projectModalImage.src = project.image_url;
+            projectModalImage.alt = project.title;
+            projectModalTitle.textContent = project.title;
+            projectModalDescription.textContent = project.description;
+            projectModalGithub.href = project.github_url;
+            projectModalLinkedin.href = project.linkedin_url;
+
+            // Display technologies
+            if (project.technologies && project.technologies.length > 0) {
+                projectModalTechnologies.innerHTML = project.technologies.map(tech => 
+                    `<span class="bg-slate-700 text-sky-400 px-3 py-1 rounded-full text-sm">${tech}</span>`
+                ).join(' ');
+            } else {
+                projectModalTechnologies.innerHTML = '<span class="text-slate-500">No technologies specified</span>';
+            }
+
+            // Load README from GitHub
+            await loadGitHubReadme(project.github_url, projectModalReadme);
+
+            // Show modal
+            projectModal.classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        window.closeProjectModal = function() {
+            const projectModal = document.getElementById('projectModal');
+            
+            projectModal.classList.add('hidden');
+        }
+
+        // GitHub README loader
+        async function loadGitHubReadme(githubUrl, container) {
+            try {
+                // Extract owner and repo from GitHub URL
+                const match = githubUrl.match(/github\.com\/([^\/]+)\/([^\/]+)/);
+                if (!match) {
+                    container.innerHTML = '<p class="text-slate-400">Unable to load README</p>';
+                    return;
+                }
+
+                const [, owner, repo] = match;
+                const repoName = repo.replace('.git', '');
+
+                // Try to fetch README from GitHub API
+                const response = await fetch(`https://api.github.com/repos/${owner}/${repoName}/readme`);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    const readmeContent = atob(data.content);
+                    
+                    // Convert markdown to HTML (basic conversion)
+                    const htmlContent = convertMarkdownToHtml(readmeContent);
+                    container.innerHTML = `<div class="prose prose-invert max-w-none">${htmlContent}</div>`;
+                } else {
+                    container.innerHTML = '<p class="text-slate-400">README not found or repository is private</p>';
+                }
+            } catch (error) {
+                console.error('Error loading README:', error);
+                container.innerHTML = '<p class="text-slate-400">Error loading README. Please check the repository URL.</p>';
+            }
+        }
+
+        // Basic markdown to HTML converter
+        function convertMarkdownToHtml(markdown) {
+            return markdown
+                .replace(/^# (.*$)/gim, '<h1 class="text-xl font-bold text-white mb-2">$1</h1>')
+                .replace(/^## (.*$)/gim, '<h2 class="text-lg font-semibold text-white mb-2">$1</h2>')
+                .replace(/^### (.*$)/gim, '<h3 class="text-base font-medium text-white mb-2">$1</h3>')
+                .replace(/\*\*(.*)\*\*/gim, '<strong class="text-white">$1</strong>')
+                .replace(/\*(.*)\*/gim, '<em class="text-slate-300">$1</em>')
+                .replace(/```([\s\S]*?)```/gim, '<pre class="bg-slate-700 p-3 rounded text-sm overflow-x-auto"><code>$1</code></pre>')
+                .replace(/`(.*?)`/gim, '<code class="bg-slate-700 px-2 py-1 rounded text-sm">$1</code>')
+                .replace(/\n/gim, '<br>')
+                .replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2" target="_blank" class="text-sky-400 hover:text-sky-300">$1</a>');
+        }
+        
+
+        // Initialize EmailJS
+        (function() {
+            emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS public key
+        })();
+
+        // Contact form submission
+        const contactForm = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            
+            const formData = {
+                from_name: document.getElementById('contactName').value,
+                from_email: document.getElementById('contactEmail').value,
+                message: document.getElementById('contactMessage').value,
+                to_name: 'Yogavinay'
+            };
+            
+            try {
+                // Send email using EmailJS
+                const result = await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', formData);
+                
+                if (result.status === 200) {
+                    alert('Message sent successfully! I\'ll get back to you soon.');
+                    contactForm.reset();
+                } else {
+                    alert('Failed to send message. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error submitting contact form:', error);
+                alert('Failed to send message. Please try again.');
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+
+    </script>
+</body>
+</html>
+
