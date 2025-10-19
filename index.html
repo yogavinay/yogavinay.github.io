@@ -102,6 +102,24 @@
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
         }
+        
+        /* Image Optimization */
+        img {
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+        
+        .project-card img {
+            transition: opacity 0.3s ease;
+        }
+        
+        .project-card img[loading="lazy"] {
+            opacity: 0;
+        }
+        
+        .project-card img[loading="lazy"].loaded {
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -269,7 +287,8 @@
                     <div class="relative h-64 overflow-hidden">
                         <img src="./images/deepfake-detection.png" 
                              alt="Deepfake Detection" 
-                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                             loading="lazy">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
                         <div class="absolute bottom-4 left-4 right-4">
                             <h3 class="text-xl font-bold text-white mb-2">Deepfake Detection</h3>
@@ -300,7 +319,8 @@
                     <div class="relative h-64 overflow-hidden">
                         <img src="./images/instagram-clone.png" 
                              alt="Instagram Clone" 
-                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                             loading="lazy">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
                         <div class="absolute bottom-4 left-4 right-4">
                             <h3 class="text-xl font-bold text-white mb-2">Instagram Clone</h3>
@@ -331,7 +351,8 @@
                     <div class="relative h-64 overflow-hidden">
                         <img src="./images/gesture-control.png" 
                              alt="Gesture Control System" 
-                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                             loading="lazy">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
                         <div class="absolute bottom-4 left-4 right-4">
                             <h3 class="text-xl font-bold text-white mb-2">Gesture Control System</h3>
@@ -362,7 +383,8 @@
                     <div class="relative h-64 overflow-hidden">
                         <img src="./images/face_expression.png" 
                              alt="Face Expression Detector" 
-                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                             loading="lazy">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
                         <div class="absolute bottom-4 left-4 right-4">
                             <h3 class="text-xl font-bold text-white mb-2">Face Expression Detector</h3>
@@ -393,7 +415,8 @@
                     <div class="relative h-64 overflow-hidden">
                         <img src="./images/pickles.png" 
                              alt="Online Pickles.com" 
-                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                             loading="lazy">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
                         <div class="absolute bottom-4 left-4 right-4">
                             <h3 class="text-xl font-bold text-white mb-2">Online Pickles.com</h3>
@@ -424,7 +447,8 @@
                     <div class="relative h-64 overflow-hidden">
                         <img src="./images/amazon.png" 
                              alt="Amazon Clone Webpage" 
-                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                             loading="lazy">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
                         <div class="absolute bottom-4 left-4 right-4">
                             <h3 class="text-xl font-bold text-white mb-2">Amazon Clone Webpage</h3>
@@ -455,7 +479,8 @@
                     <div class="relative h-64 overflow-hidden">
                         <img src="./images/practiced_projects.png" 
                              alt="Python Practice Projects" 
-                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                             loading="lazy">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
                         <div class="absolute bottom-4 left-4 right-4">
                             <h3 class="text-xl font-bold text-white mb-2">Python Practice Projects</h3>
@@ -486,7 +511,8 @@
                     <div class="relative h-64 overflow-hidden">
                         <img src="./images/whatsapp.png" 
                              alt="WhatsApp Clone" 
-                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                             loading="lazy">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
                         <div class="absolute bottom-4 left-4 right-4">
                             <h3 class="text-xl font-bold text-white mb-2">WhatsApp Clone</h3>
@@ -705,6 +731,25 @@
 
         // Initialize Lucide icons for the static project cards
         lucide.createIcons();
+
+        // Lazy loading image handler
+        const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+        
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.addEventListener('load', () => {
+                        img.classList.add('loaded');
+                    });
+                    observer.unobserve(img);
+                }
+            });
+        });
+        
+        lazyImages.forEach(img => {
+            imageObserver.observe(img);
+        });
 
 
 
